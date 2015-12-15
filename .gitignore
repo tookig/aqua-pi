@@ -1,4 +1,6 @@
 /nbproject/private/
-/application/config/
 /application/logs/
 /assets/tmp/
+/.htaccess
+/application/config/config.php
+/application/config/database.php
