@@ -1,6 +1,6 @@
 <html>
     <head>
-        <meta http-equiv="Refresh" content="30">
+        <meta http-equiv="Refresh" content="10">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         
         <title>Aqua-Pi 1.0</title>
