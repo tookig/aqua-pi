@@ -53,12 +53,14 @@
                     },
                     dataType: "jsonp",
                     jsonpCallback: "callback",
-                    type:"get"
-                }).done(function(json) {
-                    if (json.success && json.temperature) {
-                        $("#temperature").html(json.temperature.value);
-                        $("#timestamp").html(json.temperature.timestamp);
+                    type:"get",
+                    success: function(json) {
+                        if (json.success && json.temperature) {
+                             $("#temperature").html(json.temperature.value);
+                             $("#timestamp").html(json.temperature.timestamp);
+                        }
                     }
+                }).done(function(json) {
                 }).fail(function(j, textStatus, errorThrown) {
                 }).always(function() {
                 });
@@ -75,7 +77,7 @@
             <h1>Aqua-cam</h1>
             <img id="webcam-image" src="<?php echo site_url("assets/images/aquacam.jpg"); ?>"/>
             <?php if ($temperature): ?>
-            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?>&degC</span> at <span id="timestamp"><?php echo $temperature->timestamp; ?></span></div>
+            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?></span>&degC at <span id="timestamp"><?php echo $temperature->timestamp; ?></span></div>
             <?php endif; ?>
         </div>
     </body>

@@ -19,9 +19,9 @@ class Welcome extends CI_Controller {
         public function get_temperature_ajax() {
             $t = $this->_get_temperature();
             if ($t) {
-                die ("callback("+json_encode(array("success"=>true, "errors"=>false, "temperature"=>$t))+")");
+                die ($this->input->get_post("callback")."(".json_encode(array("success"=>true, "errors"=>false, "temperature"=>$t)).")");
             }
-            die ("callback("+json_encode(array("success"=>false, "errors"=>array("No temperature available"), "temperature"=>false))+")");
+            die ($this->input->get_post("callback")."(".json_encode(array("success"=>false, "errors"=>array("No temperature available"), "temperature"=>false)).")");
         }
         
         function _get_temperature() {
