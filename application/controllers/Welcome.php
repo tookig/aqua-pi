@@ -2,25 +2,30 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
+            $this->load->helper('file');
             $this->load->helper("url");
-		$this->load->view('show.php');
+             
+            $data = array(
+                "temperature" => $this->_get_temperature()
+            );
+            
+            $this->load->view('show.php', $data);
 	}
+        
+        function _get_temperature() {
+            $s = read_file("./assets/temperature.txt");
+            if (!$s) {
+                return false;
+            }
+            $json = json_decode($s);
+            if (!array_key_exists("temperature", $json) || !array_key_exists("timestamp", $json)) {
+                return false;
+            }
+            return (object)array(
+                "value" => $json->temperature,
+                "timestamp" => $json->timestamp
+            );
+        }
 }
