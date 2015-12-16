@@ -1,6 +1,6 @@
 <html>
     <head>
-        <meta http-equiv="Refresh" content="10">
+        <!--<meta http-equiv="Refresh" content="10">-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         
         <title>Aqua-Pi 1.0</title>
@@ -38,6 +38,36 @@
             }
         </style>
         
+        <script>
+        $(function() {
+            var updateImage = function() {
+                d = new Date();
+                $("#webcam-image").attr("src", "<?php echo site_url("assets/images/aquacam.jpg"); ?>"+"?"+d.getTime()); 
+            }
+            
+            var updateTemperature = function() {
+                d = new Date();
+                $.ajax("<?php echo site_url("welcome/get_temperature_ajax"); ?>", {
+                    data: {
+                        "ts": d.getTime()
+                    },
+                    dataType: "jsonp",
+                    jsonpCallback: "callback",
+                    type:"get"
+                }).done(function(json) {
+                    if (json.success && json.temperature) {
+                        $("#temperature").html(json.temperature.value);
+                        $("#timestamp").html(json.temperature.timestamp);
+                    }
+                }).fail(function(j, textStatus, errorThrown) {
+                }).always(function() {
+                });
+            }
+            
+            setInterval(updateImage, 10000);
+            setInterval(updateTemperature, 10000);
+        });
+        </script>
     </head>
     
     <body>
@@ -45,7 +75,7 @@
             <h1>Aqua-cam</h1>
             <img id="webcam-image" src="<?php echo site_url("assets/images/aquacam.jpg"); ?>"/>
             <?php if ($temperature): ?>
-            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?>&degC</span> at <?php echo $temperature->timestamp; ?></div>
+            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?>&degC</span> at <span id="timestamp"><?php echo $temperature->timestamp; ?></span></div>
             <?php endif; ?>
         </div>
     </body>
