@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta http-equiv="Refresh" content="30">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         
         <title>Aqua-Pi 1.0</title>
@@ -44,7 +45,7 @@
             <h1>Aqua-cam</h1>
             <img id="webcam-image" src="<?php echo site_url("assets/images/aquacam.jpg"); ?>"/>
             <?php if ($temperature): ?>
-            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?></span> at <?php echo $temperature->timestamp; ?></div>
+            <div class="temperature-box">Temperature: <span id="temperature"><?php echo $temperature->value; ?>&degC</span> at <?php echo $temperature->timestamp; ?></div>
             <?php endif; ?>
         </div>
     </body>
